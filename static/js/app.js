@@ -19,4 +19,25 @@ function buildTable(data) {
             cell.text(val);
         });
     });
-}
+};
+
+function handleClick() {
+    // Look for #datetime id in HTML
+    // Property(value) --> grab information and hold in "date variable"
+    let date = d3.select("#datetime").property("value");
+
+    //default filter (tableData = original data)
+    let filteredData = tableData;
+
+    if (date) {
+        //show rows where date == date filter. "===" --> match exactly (type & value)
+        filteredData = filteredData.filter(row => row.datetime === date);
+    };
+    
+    //Rebuild table using filtered data. No date --> Original table used
+    buildTable(filteredData);
+};
+
+d3.select("#filter-btn").on("click", handleClick);
+
+buildTable(tableData);
